@@ -1,4 +1,3 @@
-
 var start;
 
 $( document ).ready(function() {
@@ -21,7 +20,7 @@ async function Infinite()
 	var code = start;
 	var cpt = 0;
 	
-	for (var i = 0; i <= 100; i++) 
+	for (var i = 0; i <= 10; i++) 
 	{ 
 		cpt += 1;
 		if(cpt == 9)
@@ -73,9 +72,11 @@ function LoopFct ()
 async function Scrape(code)
 {
 	var StartingPoint = ""
-	//var url = "https://cors-anywhere.herokuapp.com/" + "https://prnt.sc/" //+ StartingPoint
-	var url = "https://thingproxy.freeboard.io/fetch/" + "https://prnt.sc/" //+ StartingPoint
-	
+	//var url = "https://cors-anywhere.herokuapp.com/" + "https://prnt.sc/" 
+	//var url = "https://thingproxy.freeboard.io/fetch/" + "https://prnt.sc/" 
+	//var url = https://api.codetabs.com/cors-proxy/ + "https://prnt.sc/" 
+	var url = "https://api.codetabs.com/v1/proxy/" + "https://prnt.sc/" 
+
 	url = url + code;
 	console.log(url);
 
@@ -97,13 +98,17 @@ async function Scrape(code)
      url: url,
      success: function(response) 
 		 {
-			  console.log("here");
+			 console.log("response:" + response);
 			var index = response.indexOf('src="https://image.prntscr.com/image/');
+			console.log("index" + index);
 			var str = response.substr(index, 100);
 			str = str.substr(5);
+			console.log("str" + str);
 			var index2 = str.indexOf('"');
 			var link_img = str.substr(0,index2);
+			console.log("link_img" + link_img);
 			var strHtml = '<a href="#"><img src="' + link_img + '"></a>';
+			console.log(strHtml);
 			document.getElementById("insert").innerHTML += strHtml;
 		 }
 	});
